@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cards</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #1a1a1a;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        .app {
+            max-width: 390px;
+            height: 100vh;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background-color: #121212;
+            overflow: hidden;
+            padding-bottom: 83px;
+        }
+
+        .group-container {
+            flex: 1;
+            position: relative;
+            padding: 16px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #121212;
+        }
+
+        .title {
+            color: #808080;
+            font-size: 19.2px;
+            margin-bottom: 16px;
+            text-align: center;
+        }
+
+        .group-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12.8px;
+            width: calc(68% + 38.4px);
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%) translateY(24px);
+        }
+
+        .group-item {
+            background-color: #232528;
+            border-radius: 12.8px;
+            padding: 16px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 12.8px;
+            width: 100%;
+        }
+
+        .group-item:hover {
+            transform: scale(1.02);
+        }
+
+        .group-icon {
+            width: 38.4px;
+            height: 38.4px;
+            object-fit: contain;
+        }
+
+        .group-content {
+            flex: 1;
+        }
+
+        .group-title {
+            font-size: 19.2px;
+            font-weight: 600;
+            margin-bottom: 6.4px;
+            color: white;
+        }
+
+        .group-description {
+            font-size: 12.8px;
+            color: #808080;
+        }
+
+        .navigation {
+            height: 70.55px;
+            background-color: #000000;
+            border-radius: 15.3px 15.3px 0 0;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+            padding: 0;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: url('assets/icons/iconsbackground.png') no-repeat center center;
+            background-size: 95% 67%;
+            gap: 0;
+            width: 72.675%;
+            max-width: 314.5px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: none;
+            width: 20%;
+            height: 69.615px;
+            padding: 0;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            z-index: 1;
+            margin: 0;
+        }
+
+        .nav-btn img {
+            width: 46.665px;
+            height: 46.665px;
+            object-fit: contain;
+            display: block;
+            position: relative;
+        }
+
+        #randomBtn img {
+            width: 53.55px;
+            height: 53.55px;
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="app">
+        <div class="group-container">
+            <h1 class="title">Выбирай,дружок :)</h1>
+            <div class="group-list">
+                <div class="group-item">
+                    <img src="assets/icons/book.png" alt="База" class="group-icon">
+                    <div class="group-content">
+                        <h2 class="group-title">БАЗА</h2>
+                        <p class="group-description">Паки расставлены в порядке убывания по частоте использования и важности.</p>
+                    </div>
+                </div>
+                <div class="group-item">
+                    <img src="assets/icons/person.png" alt="Жизнь" class="group-icon">
+                    <div class="group-content">
+                        <h2 class="group-title">ЖИЗНЬ</h2>
+                        <p class="group-description">Тело / эмоции / соц. сети / работа / путешествия / еда / музыка / игры / животные</p>
+                    </div>
+                </div>
+                <div class="group-item">
+                    <img src="assets/icons/briefcase.png" alt="Для профессии" class="group-icon">
+                    <div class="group-content">
+                        <h2 class="group-title">ДЛЯ ПРОФЕССИИ</h2>
+                        <p class="group-description">Пак для Разрабов, Дизов, Маркетологов, Проджектов, Видеомейкеров, Продюсеров</p>
+                    </div>
+                </div>
+                <div class="group-item">
+                    <img src="assets/icons/top.png" alt="Топы" class="group-icon">
+                    <div class="group-content">
+                        <h2 class="group-title">АХ**ННЫЕ ТОПЫ</h2>
+                        <p class="group-description">ТОП фразовых глаголов ТОП разговорного сленга ТОП чтобы звучать лучше</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="navigation">
+            <button class="nav-btn search-btn">
+                <img src="assets/icons/search.png" alt="Search">
+            </button>
+            <button class="nav-btn cards-btn" onclick="window.location.href='cards.html'">
+                <img src="assets/icons/cards.png" alt="Cards">
+            </button>
+            <button class="nav-btn" id="randomBtn" onclick="window.location.href='index.html'">
+                <img src="assets/icons/dice.png" alt="Random">
+            </button>
+            <button class="nav-btn favorite-btn">
+                <img src="assets/icons/heart.png" alt="Favorites">
+            </button>
+            <button class="nav-btn profile-btn">
+                <img src="assets/icons/profile.png" alt="Profile">
+            </button>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.group-item').forEach(item => {
+            item.addEventListener('click', () => {
+                // В будущем здесь будет логика загрузки соответствующей группы карточек
+                window.location.href = 'index.html';
+            });
+        });
+
+        // Navigation handlers
+        document.querySelector('.search-btn').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        document.querySelector('.cards-btn').addEventListener('click', () => {
+            window.location.href = 'cards.html';
+        });
+
+        document.querySelector('#randomBtn').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        document.querySelector('.favorite-btn').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        document.querySelector('.profile-btn').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+    </script>
+</body>
+</html> 

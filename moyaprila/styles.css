@@ -1,0 +1,174 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background-color: #1a1a1a;
+    color: white;
+}
+
+.app {
+    max-width: 390px;
+    height: 100vh;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    background-color: #000;
+}
+
+.card-container {
+    flex: 1;
+    position: relative;
+    padding: 20px;
+    overflow: hidden;
+}
+
+.card {
+    position: absolute;
+    width: 100%;
+    height: calc(100vh - 123px); /* 83px navigation + 40px padding */
+    background-color: #1E1E1E;
+    border-radius: 30px;
+    padding: 24px;
+    cursor: grab;
+    user-select: none;
+    touch-action: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.next-card {
+    transform: translateX(100%);
+    opacity: 0;
+}
+
+.card-content {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.word-section {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 8px;
+}
+
+.word {
+    font-size: 36px;
+    font-weight: 600;
+    color: #FFFFFF;
+    margin: 0;
+}
+
+.sound-btn {
+    background: none;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+    transition: transform 0.2s ease;
+}
+
+.sound-btn:hover {
+    transform: scale(1.1);
+}
+
+.transcription {
+    color: #808080;
+    font-size: 20px;
+    font-weight: 400;
+    margin-bottom: 32px;
+}
+
+.examples {
+    margin-top: 24px;
+}
+
+.example {
+    background-color: #2A2A2A;
+    padding: 16px;
+    border-radius: 16px;
+    margin-bottom: 16px;
+    transition: transform 0.2s ease;
+}
+
+.example:hover {
+    transform: translateX(5px);
+}
+
+.example p {
+    margin: 0;
+    font-size: 18px;
+    line-height: 1.5;
+}
+
+.example .translation {
+    color: #808080;
+    margin-top: 8px;
+}
+
+.navigation {
+    height: 83px;
+    background-color: #000000;
+    border-radius: 20px 20px 0 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 0 20px;
+    position: relative;
+}
+
+.nav-btn {
+    background: none;
+    border: none;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    position: relative;
+}
+
+.nav-btn img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+.nav-btn.active::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 4px;
+    height: 4px;
+    background-color: #fff;
+    border-radius: 50%;
+}
+
+.nav-btn:hover {
+    transform: scale(1.1);
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+.current-card {
+    animation: slideIn 0.3s ease;
+}

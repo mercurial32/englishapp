@@ -1,0 +1,86 @@
+[
+  {
+    "word": "chase",
+    "transcription": "[чейс]",
+    "description": "Используется в ситуациях преследования или стремления к чему-то. Так же chase может значить выгонять что-то или кого-то.",
+    "meanings": [
+      {
+        "phrase": "chase a thief",
+        "translation": "преследовать вора",
+        "image": "images/chase1.png"
+      },
+      {
+        "phrase": "chase a dream",
+        "translation": "гнаться за мечтой",
+        "image": "images/chase2.png"
+      },
+      {
+        "phrase": "chase away",
+        "translation": "прогнать прочь",
+        "image": "images/chase3.png"
+      }
+    ],
+    "audio": "audio/chase.mp3",
+    "tags": [
+      "B2",
+      "База"
+    ],
+    "profession": null
+  },
+  {
+    "word": "run",
+    "transcription": "[ран]",
+    "description": "Означает перемещение быстрым шагом, а также использование чего-либо.",
+    "meanings": [
+      {
+        "phrase": "run fast",
+        "translation": "бежать быстро",
+        "image": "images/run1.png"
+      },
+      {
+        "phrase": "run a program",
+        "translation": "запустить программу",
+        "image": "images/run2.png"
+      },
+      {
+        "phrase": "run a business",
+        "translation": "управлять бизнесом",
+        "image": "images/run3.png"
+      }
+    ],
+    "audio": "audio/run.mp3",
+    "tags": [
+      "A2",
+      "База"
+    ],
+    "profession": null
+  },
+  {
+    "word": "build",
+    "transcription": "[билд]",
+    "description": "Строить или создавать что-либо — дом, проект или бизнес.",
+    "meanings": [
+      {
+        "phrase": "build a house",
+        "translation": "построить дом",
+        "image": "images/build1.png"
+      },
+      {
+        "phrase": "build a career",
+        "translation": "построить карьеру",
+        "image": "images/build2.png"
+      },
+      {
+        "phrase": "build trust",
+        "translation": "завоевать доверие",
+        "image": "images/build3.png"
+      }
+    ],
+    "audio": "audio/build.mp3",
+    "tags": [
+      "B1",
+      "База"
+    ],
+    "profession": null
+  }
+]
