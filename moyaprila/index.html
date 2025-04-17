@@ -1,9 +1,27 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+<script>
+  Telegram.WebApp.ready();      // Сообщаем Telegram, что прила готова
+  Telegram.WebApp.expand();     // Говорим Telegram: "Покажи приложуху на весь экран"
+</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Cards</title>
+    <style>
+        html, body {
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          overflow: hidden;
+        }
+    
+        #root {
+          height: 100%;
+        }
+      </style>
     <style>
         * {
             margin: 0;
