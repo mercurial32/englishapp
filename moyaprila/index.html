@@ -566,7 +566,7 @@
                     currentX = diff;
                     
                     const rotation = diff * 0.1;
-                    card.style.transform = `translateX(calc(-50% + ${diff}px)) rotate(${rotation}deg)`;
+                    card.style.transform = translateX(calc(-50% + ${diff}px)) rotate(${rotation}deg);
 
                     const opacity = Math.max(1 - Math.abs(diff) / 400, 0);
                     card.style.opacity = opacity;
@@ -587,7 +587,7 @@
 
                     if (Math.abs(currentX) > 100) {
                         const direction = currentX > 0 ? 1 : -1;
-                        card.style.transform = `translateX(calc(-50% + ${direction * window.innerWidth}px)) rotate(${direction * 45}deg)`;
+                        card.style.transform = translateX(calc(-50% + ${direction * window.innerWidth}px)) rotate(${direction * 45}deg);
                         card.style.opacity = '0';
                         
                         const nextCard = document.querySelector('.next-card');
@@ -682,7 +682,7 @@
                 transcriptionElement.textContent = card.transcription;
                 descriptionElement.textContent = card.description;
 
-                meaningsContainer.innerHTML = card.meanings.map(meaning => `
+                meaningsContainer.innerHTML = card.meanings.map(meaning => 
                     <div class="meaning">
                         <img src="${meaning.image}" alt="${meaning.translation}" class="meaning-image">
                         <div class="meaning-content">
@@ -690,13 +690,13 @@
                             <div class="meaning-text">${meaning.translation}</div>
                         </div>
                     </div>
-                `).join('');
+                ).join('');
 
                 const allTags = [...card.tags];
                 if (card.profession) allTags.push(card.profession);
-                tagsContainer.innerHTML = allTags.map(tag => `
+                tagsContainer.innerHTML = allTags.map(tag => 
                     <span class="tag">${tag}</span>
-                `).join('');
+                ).join('');
             }
 
             showRandomCard() {
