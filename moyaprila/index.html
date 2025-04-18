@@ -2,27 +2,39 @@
 <html lang="en">
 <head>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<script>
-  Telegram.WebApp.ready();      // Сообщаем Telegram, что прила готова
-  Telegram.WebApp.expand();     // Говорим Telegram: "Покажи приложуху на весь экран"
-</script>
+    <script>
+        // Инициализация Telegram WebApp
+        const tg = window.Telegram.WebApp;
+        tg.ready();
+        tg.expand();
+    </script>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>English Cards</title>
     <style>
+        :root {
+            --tg-theme-bg-color: #121212;
+            --tg-theme-text-color: #FFFFFF;
+            --tg-theme-hint-color: #808080;
+            --tg-theme-link-color: #FFFFFF;
+            --tg-theme-button-color: #232528;
+            --tg-theme-button-text-color: #FFFFFF;
+        }
+
         html, body {
-          margin: 0;
-          padding: 0;
-          height: 100%;
-          overflow: hidden;
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            background-color: var(--tg-theme-bg-color);
+            color: var(--tg-theme-text-color);
         }
     
         #root {
-          height: 100%;
+            height: 100%;
         }
-      </style>
-    <style>
+
         * {
             margin: 0;
             padding: 0;
@@ -30,20 +42,19 @@
         }
 
         body {
-            background-color: #1a1a1a;
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         .app {
-            max-width: 390px;
+            width: 100%;
             height: 100vh;
             margin: 0 auto;
             display: flex;
             flex-direction: column;
             position: relative;
-            background-color: #121212;
+            background-color: var(--tg-theme-bg-color);
             overflow: hidden;
-            padding-bottom: 83px;
+            padding-bottom: env(safe-area-inset-bottom, 83px);
         }
 
         .card-container {
@@ -54,7 +65,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background-color: #121212;
+            background-color: var(--tg-theme-bg-color);
         }
 
         .cards-stack {
@@ -84,10 +95,10 @@
             position: absolute;
             width: 87%;
             height: calc(100% - 40px);
-            background-color: #232528;
+            background-color: var(--tg-theme-button-color);
             border-radius: 20px;
             padding: 14px 0;
-            color: white;
+            color: var(--tg-theme-text-color);
             cursor: grab;
             user-select: none;
             touch-action: none;
@@ -131,7 +142,7 @@
         .word {
             font-size: 19px;
             font-weight: 600;
-            color: #FFFFFF;
+            color: var(--tg-theme-text-color);
             margin: 0;
             white-space: nowrap;
             overflow: hidden;
@@ -154,11 +165,11 @@
         .sound-btn svg {
             width: 27.9px;
             height: 27.9px;
-            fill: #FFFFFF;
+            fill: var(--tg-theme-text-color);
         }
 
         .transcription {
-            color: #808080;
+            color: var(--tg-theme-hint-color);
             font-size: 14.4px;
             font-weight: 400;
             margin: 2px 0 0 0;
@@ -166,7 +177,7 @@
         }
 
         .description {
-            color: #FFFFFF;
+            color: var(--tg-theme-text-color);
             font-size: 15px;
             line-height: 1.5;
             margin-bottom: 0;
@@ -200,7 +211,7 @@
         }
 
         .meaning {
-            background-color: #2F3237;
+            background-color: var(--tg-theme-button-color);
             padding: 8px;
             border-radius: 14.4px;
             display: grid;
@@ -228,7 +239,7 @@
         .meaning-phrase {
             font-size: 14.4px;
             font-weight: 600;
-            color: #FFFFFF;
+            color: var(--tg-theme-text-color);
             height: 21.6px;
             display: -webkit-box;
             -webkit-line-clamp: 1;
@@ -239,7 +250,7 @@
         .meaning-text {
             font-size: 14.4px;
             line-height: 1.5;
-            color: #808080;
+            color: var(--tg-theme-hint-color);
             height: 21.6px;
             display: -webkit-box;
             -webkit-line-clamp: 1;
@@ -262,11 +273,11 @@
         }
 
         .tag {
-            background-color: #2F3237;
+            background-color: var(--tg-theme-button-color);
             padding: 4.212px 8.424px;
             border-radius: 10.8px;
             font-size: 12.87px;
-            color: #808080;
+            color: var(--tg-theme-hint-color);
             white-space: nowrap;
             display: flex;
             align-items: center;
@@ -282,7 +293,7 @@
             align-items: center;
             padding: 0;
             position: fixed;
-            bottom: 30px;
+            bottom: env(safe-area-inset-bottom, 30px);
             left: 50%;
             transform: translateX(-50%);
             background: url('assets/icons/iconsbackground.png') no-repeat center center;
@@ -330,10 +341,10 @@
             position: absolute;
             width: 87%;
             height: calc(100% - 40px);
-            background-color: #232528;
+            background-color: var(--tg-theme-button-color);
             border-radius: 20px;
             padding: 14px 0;
-            color: white;
+            color: var(--tg-theme-text-color);
             left: 50%;
             transform: translateX(-50%);
             opacity: 0;
@@ -348,6 +359,21 @@
             flex-direction: column;
             width: 283.5px;
             margin: 0 auto;
+        }
+
+        @media (max-width: 390px) {
+            .app {
+                max-width: 100%;
+            }
+            
+            .card, .next-card {
+                width: 100%;
+            }
+            
+            .card-content, .meanings, .tags {
+                width: 100%;
+                max-width: 283.5px;
+            }
         }
     </style>
 </head>
@@ -415,6 +441,7 @@
     <script>
         class CardManager {
             constructor() {
+                this.tg = window.Telegram.WebApp;
                 this.cards = [
                     {
                         "word": "chase",
@@ -566,12 +593,11 @@
                     currentX = diff;
                     
                     const rotation = diff * 0.1;
-                    card.style.transform = translateX(calc(-50% + ${diff}px)) rotate(${rotation}deg);
+                    card.style.transform = `translateX(calc(-50% + ${diff}px)) rotate(${rotation}deg)`;
 
                     const opacity = Math.max(1 - Math.abs(diff) / 400, 0);
                     card.style.opacity = opacity;
 
-                    // Показываем следующую карточку
                     const nextOpacity = Math.min(Math.abs(diff) / 400, 1);
                     const nextCard = document.querySelector('.next-card');
                     if (nextCard) {
@@ -587,7 +613,7 @@
 
                     if (Math.abs(currentX) > 100) {
                         const direction = currentX > 0 ? 1 : -1;
-                        card.style.transform = translateX(calc(-50% + ${direction * window.innerWidth}px)) rotate(${direction * 45}deg);
+                        card.style.transform = `translateX(calc(-50% + ${direction * window.innerWidth}px)) rotate(${direction * 45}deg)`;
                         card.style.opacity = '0';
                         
                         const nextCard = document.querySelector('.next-card');
@@ -597,20 +623,16 @@
                         
                         requestAnimationFrame(() => {
                             setTimeout(() => {
-                                // Отключаем анимации
                                 card.style.transition = 'none';
                                 nextCard.style.transition = 'none';
                                 
-                                // Обновляем состояние
                                 this.currentIndex = (this.currentIndex + 1) % this.cards.length;
                                 this.nextIndex = (this.currentIndex + 1) % this.cards.length;
                                 
-                                // Мгновенно возвращаем карточки в исходное положение
                                 card.style.transform = 'translateX(-50%)';
                                 card.style.opacity = '1';
                                 nextCard.style.opacity = '0';
                                 
-                                // Обновляем контент
                                 this.showCard(this.currentIndex);
                                 this.preloadNextImages();
                             }, 300);
@@ -649,10 +671,8 @@
 
                 console.log('Card data:', card);
 
-                // Обновляем текущую карточку
                 this.updateCardContent('.card', card);
                 
-                // Обновляем следующую карточку
                 const nextCard = this.cards[this.nextIndex];
                 if (nextCard) {
                     this.updateCardContent('.next-card', nextCard);
@@ -675,7 +695,6 @@
                     return;
                 }
 
-                // Обновляем обработчик для кнопки звука
                 soundBtn.onclick = () => this.playSound();
 
                 wordElement.textContent = card.word;
@@ -683,19 +702,19 @@
                 descriptionElement.textContent = card.description;
 
                 meaningsContainer.innerHTML = card.meanings.map(meaning => 
-                    <div class="meaning">
+                    `<div class="meaning">
                         <img src="${meaning.image}" alt="${meaning.translation}" class="meaning-image">
                         <div class="meaning-content">
                             <div class="meaning-phrase">${meaning.phrase}</div>
                             <div class="meaning-text">${meaning.translation}</div>
                         </div>
-                    </div>
+                    </div>`
                 ).join('');
 
                 const allTags = [...card.tags];
                 if (card.profession) allTags.push(card.profession);
                 tagsContainer.innerHTML = allTags.map(tag => 
-                    <span class="tag">${tag}</span>
+                    `<span class="tag">${tag}</span>`
                 ).join('');
             }
 
@@ -715,7 +734,10 @@
             }
         }
 
-        const cardManager = new CardManager();
+        // Инициализация приложения после загрузки DOM
+        document.addEventListener('DOMContentLoaded', () => {
+            const cardManager = new CardManager();
+        });
     </script>
 </body>
 </html>
