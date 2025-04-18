@@ -2,28 +2,27 @@
 <html lang="en">
 <head>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-    <script>
-        Telegram.WebApp.ready();
-        Telegram.WebApp.expand();
-    </script>
+<script>
+  Telegram.WebApp.ready();      // Сообщаем Telegram, что прила готова
+  Telegram.WebApp.expand();     // Говорим Telegram: "Покажи приложуху на весь экран"
+</script>
 
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>English Cards</title>
     <style>
         html, body {
-            margin: 0;
-            padding: 0;
-            height: 100%;
-            overflow: hidden;
-            background-color: #1a1a1a;
+          margin: 0;
+          padding: 0;
+          height: 100%;
+          overflow: hidden;
         }
-
+    
         #root {
-            height: 100%;
-            width: 100%;
+          height: 100%;
         }
-
+      </style>
+    <style>
         * {
             margin: 0;
             padding: 0;
@@ -31,20 +30,20 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background-color: #1a1a1a;
-            color: white;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
         }
 
         .app {
-            width: 100%;
-            height: 100%;
-            max-width: none;
-            margin: 0;
+            max-width: 390px;
+            height: 100vh;
+            margin: 0 auto;
             display: flex;
             flex-direction: column;
             position: relative;
-            background-color: #000;
+            background-color: #121212;
+            overflow: hidden;
+            padding-bottom: 83px;
         }
 
         .card-container {
@@ -52,217 +51,668 @@
             position: relative;
             padding: 20px;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #121212;
+        }
+
+        .cards-stack {
+            position: absolute;
+            width: 89.25%;
+            height: calc(96.6vh - 129.15px);
+            left: 50%;
+            transform: translateX(-50%);
+            top: 80px;
+        }
+
+        .undercard {
+            position: absolute;
+            width: 148%;
+            height: 148%;
+            border-radius: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            pointer-events: none;
+            top: -178px;
+            background: url('assets/icons/undercard.png') no-repeat center;
+            background-size: cover;
+            z-index: 0;
         }
 
         .card {
             position: absolute;
-            width: 100%;
-            height: calc(100vh - 123px);
-            background-color: #1E1E1E;
-            border-radius: 30px;
-            padding: 24px;
+            width: 87%;
+            height: calc(100% - 40px);
+            background-color: #232528;
+            border-radius: 20px;
+            padding: 14px 0;
+            color: white;
             cursor: grab;
             user-select: none;
             touch-action: none;
             transition: transform 0.3s ease, opacity 0.3s ease;
-            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-        }
-
-        .next-card {
-            transform: translateX(100%);
-            opacity: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 2;
+            will-change: transform, opacity;
         }
 
         .card-content {
             height: 100%;
             display: flex;
             flex-direction: column;
-            gap: 16px;
+            width: 283.5px;
+            margin: 0 auto;
         }
 
         .word-section {
             display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 8px;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 0;
+            width: 100%;
+            height: 48px;
+            padding: 10px 20px;
+            position: absolute;
+            top: 10px;
+            left: 0;
+        }
+
+        .word-container {
+            display: flex;
+            flex-direction: column;
+            gap: 3.6px;
+            flex: 1;
+            margin-right: 10.8px;
+            overflow: hidden;
         }
 
         .word {
-            font-size: 36px;
+            font-size: 19px;
             font-weight: 600;
             color: #FFFFFF;
             margin: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .sound-btn {
             background: none;
             border: none;
-            font-size: 24px;
             cursor: pointer;
-            padding: 5px;
-            transition: transform 0.2s ease;
+            padding: 3.6px;
+            width: 27.9px;
+            height: 27.9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
         }
 
-        .sound-btn:hover {
-            transform: scale(1.1);
+        .sound-btn svg {
+            width: 27.9px;
+            height: 27.9px;
+            fill: #FFFFFF;
         }
 
         .transcription {
             color: #808080;
-            font-size: 20px;
+            font-size: 14.4px;
             font-weight: 400;
-            margin-bottom: 32px;
+            margin: 2px 0 0 0;
+            height: 18px;
         }
 
-        .examples {
-            margin-top: 24px;
-        }
-
-        .example {
-            background-color: #2A2A2A;
-            padding: 16px;
-            border-radius: 16px;
-            margin-bottom: 16px;
-            transition: transform 0.2s ease;
-        }
-
-        .example:hover {
-            transform: translateX(5px);
-        }
-
-        .example p {
-            margin: 0;
-            font-size: 18px;
+        .description {
+            color: #FFFFFF;
+            font-size: 15px;
             line-height: 1.5;
+            margin-bottom: 0;
+            height: 120px;
+            overflow-y: auto;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-align: left;
+            padding: 0 20px;
+            margin-top: 0;
+            position: absolute;
+            top: 68px;
+            left: 0;
+            right: 0;
         }
 
-        .example .translation {
+        .meanings {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 0;
+            justify-content: center;
+            width: 283.5px;
+            height: 320px;
+            position: absolute;
+            bottom: 55px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 0 5px;
+        }
+
+        .meaning {
+            background-color: #2F3237;
+            padding: 8px;
+            border-radius: 14.4px;
+            display: grid;
+            grid-template-columns: 85px 1fr;
+            gap: 11.7px;
+            height: 100px;
+        }
+
+        .meaning-image {
+            width: 85px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 10.8px;
+            justify-self: center;
+            align-self: center;
+        }
+
+        .meaning-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 3.6px;
+        }
+
+        .meaning-phrase {
+            font-size: 14.4px;
+            font-weight: 600;
+            color: #FFFFFF;
+            height: 21.6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .meaning-text {
+            font-size: 14.4px;
+            line-height: 1.5;
             color: #808080;
-            margin-top: 8px;
+            height: 21.6px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .tags {
+            height: 31.2px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 9.36px;
+            overflow: hidden;
+            position: absolute;
+            bottom: 12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 283.5px;
+            padding: 0 5px 5px 5px;
+        }
+
+        .tag {
+            background-color: #2F3237;
+            padding: 4.212px 8.424px;
+            border-radius: 10.8px;
+            font-size: 12.87px;
+            color: #808080;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .navigation {
-            height: 83px;
+            height: 70.55px;
             background-color: #000000;
-            border-radius: 20px 20px 0 0;
+            border-radius: 15.3px 15.3px 0 0;
             display: flex;
-            justify-content: space-around;
+            justify-content: flex-start;
             align-items: center;
-            padding: 0 20px;
-            position: relative;
+            padding: 0;
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: url('assets/icons/iconsbackground.png') no-repeat center center;
+            background-size: 95% 67%;
+            gap: 0;
+            width: 72.675%;
+            max-width: 314.5px;
         }
 
         .nav-btn {
             background: none;
             border: none;
-            width: 48px;
-            height: 48px;
-            padding: 12px;
+            width: 20%;
+            height: 69.615px;
+            padding: 0;
             cursor: pointer;
             transition: transform 0.2s ease;
             position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            z-index: 1;
+            margin: 0;
         }
 
         .nav-btn img {
-            width: 100%;
-            height: 100%;
+            width: 46.665px;
+            height: 46.665px;
             object-fit: contain;
+            display: block;
+            position: relative;
         }
 
-        .nav-btn.active::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 4px;
-            height: 4px;
-            background-color: #fff;
-            border-radius: 50%;
+        #randomBtn img {
+            width: 53.55px;
+            height: 53.55px;
         }
 
         .nav-btn:hover {
             transform: scale(1.1);
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        .next-card {
+            position: absolute;
+            width: 87%;
+            height: calc(100% - 40px);
+            background-color: #232528;
+            border-radius: 20px;
+            padding: 14px 0;
+            color: white;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1;
+            will-change: opacity;
         }
 
-        .current-card {
-            animation: slideIn 0.3s ease;
+        .next-card .card-content {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            width: 283.5px;
+            margin: 0 auto;
         }
     </style>
 </head>
 <body>
-    <div id="root" class="app">
+    <div class="app">
         <div class="card-container">
-            <div class="card current-card">
-                <div class="card-content">
-                    <div class="word-section">
-                        <h1 class="word">build</h1>
-                        <button class="sound-btn">🔊</button>
-                    </div>
-                    <p class="transcription">[билд]</p>
-                    <div class="examples">
-                        <div class="example">
-                            <p>build a house</p>
-                            <p class="translation">построить дом</p>
+            <div class="cards-stack">
+                <div class="undercard"></div>
+                <div class="next-card">
+                    <div class="card-content">
+                        <div class="word-section">
+                            <div class="word-container">
+                                <h1 class="word"></h1>
+                                <p class="transcription"></p>
+                            </div>
+                            <button class="sound-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M14.47 3.12c-.28-.14-.58-.21-.89-.21-.31 0-.61.07-.89.21L7 6H4c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h3l5.69 2.88c.28.14.58.21.89.21.31 0 .61-.07.89-.21.55-.28.89-.84.89-1.44V4.56c0-.6-.34-1.16-.89-1.44zM16 15h2v-2h2v-2h-2V9h-2v2h-2v2h2v2z"/>
+                                </svg>
+                            </button>
                         </div>
-                        <div class="example">
-                            <p>build a career</p>
-                            <p class="translation">построить карьеру</p>
-                        </div>
-                        <div class="example">
-                            <p>build trust</p>
-                            <p class="translation">завоевать доверие</p>
-                        </div>
+                        <p class="description"></p>
+                        <div class="meanings"></div>
+                        <div class="tags"></div>
                     </div>
                 </div>
-            </div>
-            <div class="card next-card">
-                <div class="card-content">
-                    <div class="word-section">
-                        <h1 class="word">run</h1>
-                        <button class="sound-btn">🔊</button>
-                    </div>
-                    <p class="transcription">[ран]</p>
-                    <div class="examples">
-                        <div class="example">
-                            <p>run fast</p>
-                            <p class="translation">бежать быстро</p>
+                <div class="card">
+                    <div class="card-content">
+                        <div class="word-section">
+                            <div class="word-container">
+                                <h1 class="word"></h1>
+                                <p class="transcription"></p>
+                            </div>
+                            <button class="sound-btn">
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                                    <path d="M14.47 3.12c-.28-.14-.58-.21-.89-.21-.31 0-.61.07-.89.21L7 6H4c-1.1 0-2 .9-2 2v8c0 1.1.9 2 2 2h3l5.69 2.88c.28.14.58.21.89.21.31 0 .61-.07.89-.21.55-.28.89-.84.89-1.44V4.56c0-.6-.34-1.16-.89-1.44zM16 15h2v-2h2v-2h-2V9h-2v2h-2v2h2v2z"/>
+                                </svg>
+                            </button>
                         </div>
-                        <div class="example">
-                            <p>run a program</p>
-                            <p class="translation">запустить программу</p>
-                        </div>
-                        <div class="example">
-                            <p>run a business</p>
-                            <p class="translation">управлять бизнесом</p>
-                        </div>
+                        <p class="description"></p>
+                        <div class="meanings"></div>
+                        <div class="tags"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="navigation">
-            <button class="nav-btn"><img src="assets/icons/search.png" alt="Search"></button>
-            <button class="nav-btn"><img src="assets/icons/cards.png" alt="Cards"></button>
-            <button class="nav-btn"><img src="assets/icons/dice.png" alt="Random"></button>
-            <button class="nav-btn"><img src="assets/icons/heart.png" alt="Favorites"></button>
-            <button class="nav-btn"><img src="assets/icons/profile.png" alt="Profile"></button>
+            <button class="nav-btn search-btn">
+                <img src="assets/icons/search.png" alt="Search">
+            </button>
+            <button class="nav-btn cards-btn" onclick="window.location.href='cards.html'">
+                <img src="assets/icons/cards.png" alt="Cards">
+            </button>
+            <button class="nav-btn" id="randomBtn">
+                <img src="assets/icons/dice.png" alt="Random">
+            </button>
+            <button class="nav-btn favorite-btn">
+                <img src="assets/icons/heart.png" alt="Favorites">
+            </button>
+            <button class="nav-btn profile-btn">
+                <img src="assets/icons/profile.png" alt="Profile">
+            </button>
         </div>
     </div>
     <script>
-        // твой JS-код из script.js
         class CardManager {
-            // ... весь твой код
+            constructor() {
+                this.cards = [
+                    {
+                        "word": "chase",
+                        "transcription": "[чейс]",
+                        "description": "Используется в ситуациях преследования или стремления к чему-то. Так же chase может значить выгонять что-то или кого-то.",
+                        "meanings": [
+                            {
+                                "phrase": "chase a thief",
+                                "translation": "преследовать вора",
+                                "image": "assets/images/chase1.png"
+                            },
+                            {
+                                "phrase": "chase a dream",
+                                "translation": "гнаться за мечтой",
+                                "image": "assets/images/chase2.png"
+                            },
+                            {
+                                "phrase": "chase away",
+                                "translation": "прогнать прочь",
+                                "image": "assets/images/chase3.png"
+                            }
+                        ],
+                        "audio": "assets/audio/chase.mp3",
+                        "tags": [
+                            "B2",
+                            "База"
+                        ],
+                        "profession": null
+                    },
+                    {
+                        "word": "run",
+                        "transcription": "[ран]",
+                        "description": "Означает перемещение быстрым шагом, а также использование чего-либо.",
+                        "meanings": [
+                            {
+                                "phrase": "run fast",
+                                "translation": "бежать быстро",
+                                "image": "assets/images/run1.png"
+                            },
+                            {
+                                "phrase": "run a program",
+                                "translation": "запустить программу",
+                                "image": "assets/images/run2.png"
+                            },
+                            {
+                                "phrase": "run a business",
+                                "translation": "управлять бизнесом",
+                                "image": "assets/images/run3.png"
+                            }
+                        ],
+                        "audio": "assets/audio/run.mp3",
+                        "tags": [
+                            "A2",
+                            "База"
+                        ],
+                        "profession": null
+                    },
+                    {
+                        "word": "build",
+                        "transcription": "[билд]",
+                        "description": "Строить или создавать что-либо — дом, проект или бизнес.",
+                        "meanings": [
+                            {
+                                "phrase": "build a house",
+                                "translation": "построить дом",
+                                "image": "assets/images/build1.png"
+                            },
+                            {
+                                "phrase": "build a career",
+                                "translation": "построить карьеру",
+                                "image": "assets/images/build2.png"
+                            },
+                            {
+                                "phrase": "build trust",
+                                "translation": "завоевать доверие",
+                                "image": "assets/images/build3.png"
+                            }
+                        ],
+                        "audio": "assets/audio/build.mp3",
+                        "tags": [
+                            "B1",
+                            "База"
+                        ],
+                        "profession": null
+                    }
+                ];
+                this.currentIndex = 0;
+                this.nextIndex = 1;
+                console.log('CardManager initialized with', this.cards.length, 'cards');
+                this.setupEventListeners();
+                this.setupSwipe();
+                this.showCard(this.currentIndex);
+                this.preloadNextImages();
+            }
+
+            preloadNextImages() {
+                const nextCard = this.cards[this.nextIndex];
+                if (nextCard) {
+                    nextCard.meanings.forEach(meaning => {
+                        const img = new Image();
+                        img.src = meaning.image;
+                    });
+                }
+            }
+
+            setupEventListeners() {
+                console.log('Setting up event listeners');
+                const soundBtn = document.querySelector('.sound-btn');
+                const randomBtn = document.querySelector('#randomBtn');
+                
+                if (soundBtn) {
+                    soundBtn.addEventListener('click', () => this.playSound());
+                } else {
+                    console.error('Sound button not found');
+                }
+                
+                if (randomBtn) {
+                    randomBtn.addEventListener('click', () => this.showRandomCard());
+                } else {
+                    console.error('Random button not found');
+                }
+            }
+
+            setupSwipe() {
+                console.log('Setting up swipe');
+                const card = document.querySelector('.card');
+                if (!card) {
+                    console.error('Card element not found');
+                    return;
+                }
+
+                let startX = 0;
+                let currentX = 0;
+                let isDragging = false;
+
+                const startDragging = (e) => {
+                    isDragging = true;
+                    startX = e.type === 'mousedown' ? e.pageX : e.touches[0].pageX;
+                    currentX = 0;
+                    card.style.transition = 'none';
+                };
+
+                const drag = (e) => {
+                    if (!isDragging) return;
+
+                    e.preventDefault();
+                    const x = e.type === 'mousemove' ? e.pageX : e.touches[0].pageX;
+                    const diff = x - startX;
+                    currentX = diff;
+                    
+                    const rotation = diff * 0.1;
+                    card.style.transform = `translateX(calc(-50% + ${diff}px)) rotate(${rotation}deg)`;
+
+                    const opacity = Math.max(1 - Math.abs(diff) / 400, 0);
+                    card.style.opacity = opacity;
+
+                    // Показываем следующую карточку
+                    const nextOpacity = Math.min(Math.abs(diff) / 400, 1);
+                    const nextCard = document.querySelector('.next-card');
+                    if (nextCard) {
+                        nextCard.style.opacity = nextOpacity;
+                    }
+                };
+
+                const endDragging = () => {
+                    if (!isDragging) return;
+                    
+                    isDragging = false;
+                    card.style.transition = 'transform 0.3s ease, opacity 0.3s ease';
+
+                    if (Math.abs(currentX) > 100) {
+                        const direction = currentX > 0 ? 1 : -1;
+                        card.style.transform = `translateX(calc(-50% + ${direction * window.innerWidth}px)) rotate(${direction * 45}deg)`;
+                        card.style.opacity = '0';
+                        
+                        const nextCard = document.querySelector('.next-card');
+                        if (nextCard) {
+                            nextCard.style.opacity = '1';
+                        }
+                        
+                        requestAnimationFrame(() => {
+                            setTimeout(() => {
+                                // Отключаем анимации
+                                card.style.transition = 'none';
+                                nextCard.style.transition = 'none';
+                                
+                                // Обновляем состояние
+                                this.currentIndex = (this.currentIndex + 1) % this.cards.length;
+                                this.nextIndex = (this.currentIndex + 1) % this.cards.length;
+                                
+                                // Мгновенно возвращаем карточки в исходное положение
+                                card.style.transform = 'translateX(-50%)';
+                                card.style.opacity = '1';
+                                nextCard.style.opacity = '0';
+                                
+                                // Обновляем контент
+                                this.showCard(this.currentIndex);
+                                this.preloadNextImages();
+                            }, 300);
+                        });
+                    } else {
+                        card.style.transform = 'translateX(-50%)';
+                        card.style.opacity = '1';
+                        const nextCard = document.querySelector('.next-card');
+                        if (nextCard) {
+                            nextCard.style.opacity = '0';
+                        }
+                    }
+                };
+
+                card.addEventListener('touchstart', startDragging, { passive: false });
+                card.addEventListener('touchmove', drag, { passive: false });
+                card.addEventListener('touchend', endDragging);
+
+                card.addEventListener('mousedown', startDragging);
+                document.addEventListener('mousemove', drag);
+                document.addEventListener('mouseup', endDragging);
+            }
+
+            showCard(index) {
+                console.log('Showing card at index:', index);
+                if (!this.cards || !this.cards.length) {
+                    console.error('No cards available');
+                    return;
+                }
+
+                const card = this.cards[index];
+                if (!card) {
+                    console.error('Invalid card index:', index);
+                    return;
+                }
+
+                console.log('Card data:', card);
+
+                // Обновляем текущую карточку
+                this.updateCardContent('.card', card);
+                
+                // Обновляем следующую карточку
+                const nextCard = this.cards[this.nextIndex];
+                if (nextCard) {
+                    this.updateCardContent('.next-card', nextCard);
+                }
+            }
+
+            updateCardContent(selector, card) {
+                const cardElement = document.querySelector(selector);
+                if (!cardElement) return;
+
+                const wordElement = cardElement.querySelector('.word');
+                const transcriptionElement = cardElement.querySelector('.transcription');
+                const descriptionElement = cardElement.querySelector('.description');
+                const meaningsContainer = cardElement.querySelector('.meanings');
+                const tagsContainer = cardElement.querySelector('.tags');
+                const soundBtn = cardElement.querySelector('.sound-btn');
+
+                if (!wordElement || !transcriptionElement || !descriptionElement || !meaningsContainer || !tagsContainer || !soundBtn) {
+                    console.error('Some elements not found in', selector);
+                    return;
+                }
+
+                // Обновляем обработчик для кнопки звука
+                soundBtn.onclick = () => this.playSound();
+
+                wordElement.textContent = card.word;
+                transcriptionElement.textContent = card.transcription;
+                descriptionElement.textContent = card.description;
+
+                meaningsContainer.innerHTML = card.meanings.map(meaning => `
+                    <div class="meaning">
+                        <img src="${meaning.image}" alt="${meaning.translation}" class="meaning-image">
+                        <div class="meaning-content">
+                            <div class="meaning-phrase">${meaning.phrase}</div>
+                            <div class="meaning-text">${meaning.translation}</div>
+                        </div>
+                    </div>
+                `).join('');
+
+                const allTags = [...card.tags];
+                if (card.profession) allTags.push(card.profession);
+                tagsContainer.innerHTML = allTags.map(tag => `
+                    <span class="tag">${tag}</span>
+                `).join('');
+            }
+
+            showRandomCard() {
+                const randomIndex = Math.floor(Math.random() * this.cards.length);
+                this.showCard(randomIndex);
+            }
+
+            playSound() {
+                const card = this.cards[this.currentIndex];
+                if (card && card.audio) {
+                    const audio = new Audio(card.audio);
+                    audio.play().catch(error => {
+                        console.error('Error playing audio:', error);
+                    });
+                }
+            }
         }
 
         const cardManager = new CardManager();
