@@ -225,4 +225,59 @@ class CardSwiper {
 // Initialize the card swiper when the page loads
 document.addEventListener('DOMContentLoaded', () => {
     new CardSwiper();
-}); 
+});
+
+// Инициализация Telegram WebApp
+Telegram.WebApp.ready();
+Telegram.WebApp.expand();
+
+// Установка темы
+const setTheme = () => {
+    document.documentElement.style.setProperty('--tg-theme-bg-color', Telegram.WebApp.backgroundColor);
+    document.documentElement.style.setProperty('--tg-theme-text-color', Telegram.WebApp.textColor);
+    document.documentElement.style.setProperty('--tg-theme-button-color', Telegram.WebApp.buttonColor);
+    document.documentElement.style.setProperty('--tg-theme-button-text-color', Telegram.WebApp.buttonTextColor);
+};
+
+// Обработчики для кнопок "See more"
+document.querySelectorAll('.see-more').forEach(button => {
+    button.addEventListener('click', (e) => {
+        const card = e.target.closest('.reward-card');
+        if (card) {
+            // Здесь можно добавить логику для показа дополнительных паков
+            console.log('Show more packs for:', card.querySelector('.game-title').textContent);
+        }
+    });
+});
+
+// Обработчики для кнопок навигации
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', (e) => {
+        e.preventDefault();
+        const section = e.currentTarget.querySelector('.nav-label').textContent;
+        // Здесь можно добавить логику навигации между разделами
+        console.log('Navigate to:', section);
+    });
+});
+
+// Анимация прогресс-баров
+const animateProgressBars = () => {
+    document.querySelectorAll('.progress-bar').forEach(bar => {
+        const fill = bar.querySelector('.progress-fill');
+        const text = bar.nextElementSibling;
+        if (fill && text) {
+            const [current, total] = text.textContent.split('/').map(Number);
+            const percentage = (current / total) * 100;
+            fill.style.width = `${percentage}%`;
+        }
+    });
+};
+
+// Инициализация приложения
+document.addEventListener('DOMContentLoaded', () => {
+    setTheme();
+    animateProgressBars();
+});
+
+// Обработка изменения темы
+Telegram.WebApp.onEvent('themeChanged', setTheme); 
